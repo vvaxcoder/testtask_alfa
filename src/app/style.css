@@ -1,0 +1,14 @@
+.ant-card-cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    padding: 12px;
+}
+
+.ant-card-cover img {
+    width: 250px !important;
+    height: 250px !important;
+
+    object-fit: contain;
+}
