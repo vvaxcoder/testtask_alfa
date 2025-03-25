@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -13,6 +14,12 @@ export default function Home() {
           priority
         />
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
+          <li className="font-bold text-4xl mb-2 tracking-[-.01em]">
+            <Link href={`/products`} passHref>
+              Link to the Products
+            </Link>
+          </li>
+
           <li className="mb-2 tracking-[-.01em]">
             Get started by editing{" "}
             <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
