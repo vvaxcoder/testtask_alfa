@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
-import { Button, Form, FormInstance, Input, Space, Modal } from "antd";
+import { Button, Form, FormInstance, Input, InputNumber, Space, Modal } from "antd";
 import { useRouter } from "next/navigation";
 import '@ant-design/v5-patch-for-react-19';
 
@@ -67,12 +67,15 @@ export default function CreateProductPage() {
                     form={form}
                     layout="vertical"
                     onFinish={handleAddProduct}>
-                    <Form.Item name="title" label="Название" rules={[{ required: true, message: 'Введите название продукта' }]}>
+                    <Form.Item
+                        name="title"
+                        label="Название"
+                        rules={[{ required: true, message: 'Введите название продукта' }]}>
                         <Input />
                     </Form.Item>
 
                     <Form.Item name="price" label="Цена" rules={[{ required: true, message: 'Введите цену продукта' }]}>
-                        <Input />
+                        <InputNumber />
                     </Form.Item>
 
                     <Form.Item name="description" label="Описание" rules={[{ required: true, message: 'Введите описание продукта' }]}>

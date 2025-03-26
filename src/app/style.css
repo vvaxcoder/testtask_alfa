@@ -23,3 +23,7 @@
         max-width: 100%;
     }
 }
+
+.ant-input-number.ant-input-number-in-form-item {
+    width: 140px;
+}
