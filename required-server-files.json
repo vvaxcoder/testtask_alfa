@@ -283,14 +283,7 @@
     },
     "htmlLimitedBots": "Mediapartners-Google|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview",
     "bundlePagesRouterDependencies": false,
-    "configFileName": "next.config.ts",
-    "_originalRedirects": [
-      {
-        "source": "/",
-        "destination": "/products",
-        "permanent": true
-      }
-    ]
+    "configFileName": "next.config.ts"
   },
   "appDir": "/opt/Folder_Ububntu/TEST_TASKS/testtask_alfa",
   "relativeAppDir": "",

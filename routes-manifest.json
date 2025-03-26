@@ -18,12 +18,6 @@
       "internal": true,
       "statusCode": 308,
       "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
-    },
-    {
-      "source": "/testtask_alfa",
-      "destination": "/testtask_alfa/products",
-      "statusCode": 308,
-      "regex": "^(?!/testtask_alfa/_next)/testtask_alfa(?:/)?$"
     }
   ],
   "headers": [],
