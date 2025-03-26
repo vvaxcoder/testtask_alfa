@@ -6,13 +6,30 @@ import { useRouter } from "next/navigation";
 import { useProductStore } from '@/app/store/ProductStore';
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import { useEffect, useState } from 'react';
+
+import Product from '@/app/types/Product';
 
 export default function ProductPage() {
   const router = useRouter();
   const { products } = useProductStore();
+  const [product, setProduct] = useState<Product | null>(null);
+
   const params = useParams();
   const { slug: id } = params;
-  const product = products.find((p: { id: number; }) => p.id === Number(id));
+
+  useEffect(() => {
+    const existingProduct = products.find((p) => p.id === Number(id));
+
+    if (existingProduct) {
+      setProduct(existingProduct);
+    } else {
+      fetch(`https://fakestoreapi.com/products/${id}`)
+        .then((res) => res.json())
+        .then((data) => setProduct(data))
+        .catch(() => setProduct(null));
+    }
+  }, [id, products]);
 
   if (!product) return <p>Продукт не найден</p>;
 
@@ -39,8 +56,16 @@ export default function ProductPage() {
               width={400}
               style={{ objectFit: 'contain' }} />
           }>
-          <h1>{product.title}</h1>
-          <p>{product.description}</p>
+          <h1 style={{ margin: '10px 0', fontSize: '18px' }}>{product.title}</h1>
+
+          <div style={{ fontWeight: 'bold', display: 'flex', justifyContent: 'flex-start', marginTop: 6, marginBottom: 6 }}>
+            <span>Price:</span>
+            <span></span>
+            <span></span>
+            <span>{product.price}</span>
+          </div>
+
+          <p style={{ textAlign: 'start' }}>{product.description}</p>
         </Card>
       </div>
     </div>

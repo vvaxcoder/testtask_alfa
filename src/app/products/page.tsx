@@ -59,11 +59,14 @@ export default function Products() {
               width={150}
               alt={p.title}
               />}>
-                <div style={{ minHeight: 50, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                </div>
                 <Typography.Text ellipsis style={{ minHeight: 50, width: 240, display: "block" }}>
                   {p.title}
                 </Typography.Text>
+
+                <div style={{ fontWeight: 'bold', display: 'flex', justifyContent: 'space-between', marginTop: 0 }}>
+                  <span>Price</span>
+                  <span>{p.price}</span>
+                </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10 }}>
                   <Button icon={favorites.has(p.id) ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined />} onClick={() => toggleFavorite(p.id)} />
