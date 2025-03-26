@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Button } from 'antd';
+import { Card, Button, Spin } from 'antd';
 import { useRouter } from "next/navigation";
 
 import { useProductStore } from '@/app/store/ProductStore';
@@ -14,6 +14,7 @@ export default function ProductPage() {
   const router = useRouter();
   const { products } = useProductStore();
   const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const params = useParams();
   const { slug: id } = params;
@@ -23,13 +24,22 @@ export default function ProductPage() {
 
     if (existingProduct) {
       setProduct(existingProduct);
+      setLoading(false);
     } else {
       fetch(`https://fakestoreapi.com/products/${id}`)
         .then((res) => res.json())
-        .then((data) => setProduct(data))
-        .catch(() => setProduct(null));
+        .then((data) => {
+          setProduct(data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setProduct(null);
+          setLoading(false);
+        });
     }
   }, [id, products]);
+
+  if (loading) return <Spin size="large" style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }} />;
 
   if (!product) return <p>Продукт не найден</p>;
 
