@@ -8,7 +8,9 @@ export const useProductStore = create<ProductStore>((set) => ({
     fetchProducts: async () => {
       const res = await fetch('https://fakestoreapi.com/products');
       const data: Product[] = await res.json();
-      set({ products: data });
+      set((state) => ({
+        products: state.products.length === 0 ? state.products = data : state.products,
+      }));
     },
     toggleFavorite: (id: number) => set((state) => {
       const newFavorites = new Set<number>(state.favorites);
@@ -25,6 +27,6 @@ export const useProductStore = create<ProductStore>((set) => ({
       products: state.products.filter((p) => p.id !== id)
     })),
     addProduct: (product: Product) => set((state) => ({
-      products: [{ ...product, id: Date.now() }, ...state.products]
+      products: [...state.products, { ...product, id: Date.now() }]
     })),
   }));

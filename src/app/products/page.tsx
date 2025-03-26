@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { Card, Button, Input, Pagination, Switch, Form, Modal, Typography } from 'antd';
+import { Card, Button, Input, Pagination, Switch, Typography } from 'antd';
 import { HeartOutlined, HeartFilled, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 import '@ant-design/v5-patch-for-react-19';
 
 import '../style.css';
@@ -13,36 +13,29 @@ import '../style.css';
 import { useProductStore } from '../store/ProductStore';
 
 export default function Products() {
+  const router = useRouter();
   const { 
     favorites,
     products,
     fetchProducts,
     toggleFavorite,
     removeProduct,
-    addProduct
   } = useProductStore();
   const [filterFavs, setFilterFavs] = useState(false);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchProducts();
-  }, [fetchProducts]);
+  }, []); // Empty dependency array ensures this effect runs only once
 
   const filteredProducts = products
     .filter(p => !filterFavs || favorites.has(p.id))
     .filter(p => p.title.toLowerCase().includes(search.toLowerCase()));
 
-  const handleAddProduct = (values: { title: string; image: string; }) => {
-    addProduct({
-      id: Date.now(),
-      title: values.title, image: values.image
-    });
-    setIsModalVisible(false);
-    form.resetFields();
+  const createProduct = () => {
+    router.push('/create-product');
   };
 
   return (
@@ -51,8 +44,8 @@ export default function Products() {
 
       <Switch checked={filterFavs} onChange={setFilterFavs} checkedChildren="Избранное" unCheckedChildren="Все" style={{ marginBottom: 20 }} />
 
-      <Button type="primary" icon={<PlusOutlined />} onClick={() => setIsModalVisible(true)} style={{ marginBottom: 2, float: 'right' }}>
-        Добавить продукт
+      <Button type="primary" icon={<PlusOutlined />} onClick={() => createProduct()} style={{ marginBottom: 2, float: 'right' }}>
+        Добавить новый продукт
       </Button>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 20, padding: '0 30px' }}>
@@ -82,15 +75,6 @@ export default function Products() {
       </div>
 
       <Pagination current={page} total={filteredProducts.length} pageSize={itemsPerPage} onChange={setPage} style={{ marginTop: 20, textAlign: 'center' }} />
-
-      <Modal title="Добавить продукт" open={isModalVisible} onCancel={() => setIsModalVisible(false)} onOk={() => form.submit()}>
-        <Form form={form} layout="vertical" onFinish={handleAddProduct}>
-          <Form.Item name="title" label="Название" rules={[{ required: true, message: 'Введите название продукта' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="image" label="Ссылка на изображение"> <Input placeholder="Необязательно" /> </Form.Item>
-        </Form>
-      </Modal>
     </div>
   );
 }
