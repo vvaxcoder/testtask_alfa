@@ -9,15 +9,15 @@ const nextConfig: NextConfig = {
     domains: ['fakestoreapi.com', 'media.istockphoto.com'],
     unoptimized: true,
   },
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/products",
-        permanent: true,
-      },
-    ];
-  },
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: "/",
+  //       destination: "/products",
+  //       permanent: true,
+  //     },
+  //   ];
+  // },
   distDir: 'out',
   basePath: isProd ? '/testtask_alfa' : '',
   assetPrefix: isProd ? '/testtask_alfa/' : '',
