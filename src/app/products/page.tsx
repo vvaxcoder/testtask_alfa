@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, Button, Input, Pagination, Switch, Typography } from 'antd';
+import { Card, Button, Input, Pagination, Switch, Typography, Spin } from 'antd';
 import { HeartOutlined, HeartFilled, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -25,10 +25,13 @@ export default function Products() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts().then(() => setLoading(false));
   }, []); // Empty dependency array ensures this effect runs only once
+
+  if (loading) return <Spin size="large" style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }} />;
 
   const filteredProducts = products
     .filter(p => !filterFavs || favorites.has(p.id))
