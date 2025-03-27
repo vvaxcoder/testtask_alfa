@@ -4,11 +4,7 @@ import { notFound } from "next/navigation";
 import Product from '@/app/types/Product';
 import ProductClient from './ProductClient';
 
-type ProductPageProps = {
-  params: { slug: string };
-};
-
-export default async function ProductPage({ params }: ProductPageProps) {
+export default async function ProductPage({ params }:{ params: { slug: string } }) {
   // const { slug } = await params;
   if (!params.slug) return notFound(); 
 
